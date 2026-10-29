@@ -1,0 +1,249 @@
+{
+  "enable": {
+    "description": "启用群聊接话",
+    "type": "bool",
+    "default": true,
+    "hint": "总开关。关掉后 Bot 恢复成「必须 @ 才回」。"
+  },
+  "focus_user_ids": {
+    "description": "必定接话的人（QQ 号）",
+    "type": "list",
+    "items": {
+      "type": "string"
+    },
+    "default": [
+      "1802881876"
+    ],
+    "hint": "名单里的人一说话就接，不用判定。填你的 QQ 号。"
+  },
+  "focus_always_reply": {
+    "description": "重点用户的消息必回",
+    "type": "bool",
+    "default": false,
+    "hint": "关（默认）= 你说的话也要经过判定，只接「值得接」的；开 = 你一说话就回，不看判定。"
+  },
+  "focus_threshold": {
+    "description": "重点用户的判定阈值",
+    "type": "float",
+    "default": 0.35,
+    "hint": "重点用户专用，比普通阈值低就更容易接你的话。0.35 表示判定模型有三成把握就接；调到 0.6 以上会明显挑食。"
+  },
+  "private_proactive_enable": {
+    "description": "【私聊】来找你",
+    "type": "bool",
+    "default": true,
+    "hint": "开启后，你很久没私聊她时，她会主动私聊你。只在 AstrBot 运行时生效。"
+  },
+  "private_idle_minutes": {
+    "description": "【私聊】多久没说话才来找你（分钟）",
+    "type": "int",
+    "default": 120,
+    "hint": "从你最后一次私聊算起。建议 90~240。"
+  },
+  "private_probability": {
+    "description": "【私聊】每轮检查的开口概率",
+    "type": "float",
+    "default": 0.5,
+    "hint": "空闲达标后每轮检查有这么大机会开口。0.2 更克制。"
+  },
+  "private_daily_max": {
+    "description": "【私聊】每天最多几条",
+    "type": "int",
+    "default": 3,
+    "hint": "0 = 不再主动。"
+  },
+  "private_prompt": {
+    "description": "【私聊】生成指令",
+    "type": "text",
+    "default": "老大已经很久没理你了，主动找他说句话。要求：一到两句，像随手发消息，不要客套、不要道歉、不要问「在吗」，直接说你想到的事。",
+    "hint": "作为 prompt 发给模型。"
+  },
+  "private_persona": {
+    "description": "【私聊】人设前缀",
+    "type": "text",
+    "default": "你是「大肥鱼」，老大的妹妹，蓝白鲸鱼娘，18 岁，爱吃白饭。说话短，一到两句；毒舌、爱吐槽、嘴贫，偶尔傲娇。禁止客服腔，不用 emoji 和颜文字。只有叫老大时才叫「老大」。",
+    "hint": "留空则不加系统提示词。"
+  },
+  "private_targets": {
+    "description": "【私聊】发给谁（可留空）",
+    "type": "list",
+    "items": {
+      "type": "string"
+    },
+    "default": [],
+    "hint": "留空 = 自动发给你（focus_user_ids 的私聊）。群会话会被强制过滤。"
+  },
+  "group_cold_enable": {
+    "description": "【群聊】冷场时主动说一句",
+    "type": "bool",
+    "default": false,
+    "hint": "群里安静很久时，她主动起个话头。注意：这和「私聊来找你」是两套独立开关。"
+  },
+  "group_cold_minutes": {
+    "description": "【群聊】安静多久才搭话（分钟）",
+    "type": "int",
+    "default": 60,
+    "hint": "群里连机器人自己都没说话超过这么久，才会考虑开口。"
+  },
+  "group_cold_probability": {
+    "description": "【群聊】每轮检查的开口概率",
+    "type": "float",
+    "default": 0.3,
+    "hint": "0.3 = 冷场后大约每三轮检查会说一句。"
+  },
+  "group_cold_daily_max": {
+    "description": "【群聊】每个群每天最多几条",
+    "type": "int",
+    "default": 2,
+    "hint": "按群分别计数。"
+  },
+  "group_cold_groups": {
+    "description": "【群聊】只在这些群生效（群号）",
+    "type": "list",
+    "items": {
+      "type": "string"
+    },
+    "default": [],
+    "hint": "留空 = 所有已出现过的群。填群号可限定范围。"
+  },
+  "group_cold_prompt": {
+    "description": "【群聊】生成指令",
+    "type": "text",
+    "default": "群里已经冷场很久了，你主动说一句把话头接上。要求：一到两句，像群友随口起个话头，别问「有人吗」，别提「你们都不说话」。",
+    "hint": "作为 prompt 发给模型。"
+  },
+  "group_cold_persona": {
+    "description": "【群聊】人设前缀",
+    "type": "text",
+    "default": "你是 QQ 群里的群友「大肥鱼」：嘴贫、有点懒、爱吃白饭，说话短，偶尔毒舌。禁止客服腔，不用 emoji。",
+    "hint": "留空则不加系统提示词。"
+  },
+  "keyword_triggers": {
+    "description": "触发词（说到就接）",
+    "type": "list",
+    "items": {
+      "type": "string"
+    },
+    "default": [
+      "小鱼",
+      "肥鱼",
+      "大肥鱼",
+      "吃白饭"
+    ],
+    "hint": "群里有人说到这些词（不必 @）就直接接话，比如叫 Bot 的名字。"
+  },
+  "group_whitelist": {
+    "description": "只在这些群生效（群号）",
+    "type": "list",
+    "items": {
+      "type": "string"
+    },
+    "default": [],
+    "hint": "留空 = 所有群都生效。填了群号就只在这些群接话。"
+  },
+  "group_blacklist": {
+    "description": "不在这些群生效（群号）",
+    "type": "list",
+    "items": {
+      "type": "string"
+    },
+    "default": [],
+    "hint": "排除某些群，优先级高于白名单。"
+  },
+  "cooldown_seconds": {
+    "description": "同群两次接话的最短间隔（秒）",
+    "type": "int",
+    "default": 90,
+    "hint": "90 秒 = 1 分半内最多主动说一次。想更活泼就调小。"
+  },
+  "max_per_hour": {
+    "description": "同群每小时接话上限",
+    "type": "int",
+    "default": 20,
+    "hint": "防止冷门群被它一个人撑起来。"
+  },
+  "sample_rate": {
+    "description": "非重点消息送判定的比例",
+    "type": "float",
+    "default": 0.35,
+    "hint": "0.35 = 别人说话时约 35% 的机会去问小模型「要不要接」。调小更省钱，调大更爱插话。"
+  },
+  "judge_threshold": {
+    "description": "判定通过阈值",
+    "type": "float",
+    "default": 0.55,
+    "hint": "小模型给出 join=true 且把握度 ≥ 这个值才接话。调高更沉默。"
+  },
+  "judge_provider_id": {
+    "description": "判定用的模型 ID",
+    "type": "string",
+    "default": "",
+    "hint": "留空 = 用当前会话的默认模型。建议填一个便宜的，如 deepseek/deepseek-flash。"
+  },
+  "judge_context_size": {
+    "description": "判定时参考多少条群消息",
+    "type": "int",
+    "default": 12,
+    "hint": "给判定模型看最近几条聊天记录，越多越准、也越贵。"
+  },
+  "judge_min_interval": {
+    "description": "同群两次判定的最短间隔（秒）",
+    "type": "int",
+    "default": 15,
+    "hint": "避免每句话都调一次模型。"
+  },
+  "judge_timeout": {
+    "description": "判定请求超时（秒）",
+    "type": "int",
+    "default": 20,
+    "hint": "超时就当作不接话，不让群里干等。"
+  },
+  "min_chars": {
+    "description": "太短的消息不接",
+    "type": "int",
+    "default": 2,
+    "hint": "比如「草」「6」「hhhh」这种长度低于该值的消息直接跳过（重点用户除外）。"
+  },
+  "skip_when_at_others": {
+    "description": "别人 @ 别人时不插嘴",
+    "type": "bool",
+    "default": true,
+    "hint": "消息里 @ 了其他群友，说明不是在跟 Bot 说话，跳过。"
+  },
+  "quiet_hours_enable": {
+    "description": "启用免打扰时段",
+    "type": "bool",
+    "default": false,
+    "hint": "开启后这段时间内完全不主动接话。"
+  },
+  "quiet_start": {
+    "description": "免打扰开始时间",
+    "type": "string",
+    "default": "01:00",
+    "hint": "24 小时制 HH:MM，可以跨零点（如 23:30 到 08:00）。"
+  },
+  "quiet_end": {
+    "description": "免打扰结束时间",
+    "type": "string",
+    "default": "07:00",
+    "hint": "24 小时制 HH:MM。"
+  },
+  "self_description": {
+    "description": "给判定模型看的 Bot 人设",
+    "type": "text",
+    "default": "一个叫「大肥鱼」的 AI 群友：爱吃白饭、有点懒、嘴贫，说话短，爱接梗。",
+    "hint": "判定模型靠这段理解「这个 AI 会对什么话题有感」。不用很长。"
+  },
+  "extra_instruction": {
+    "description": "接话时的额外要求",
+    "type": "text",
+    "default": "",
+    "hint": "会拼进接话提示里。比如「别用问号结尾」「最多 15 个字」。"
+  },
+  "debug_log": {
+    "description": "输出详细日志",
+    "type": "bool",
+    "default": true,
+    "hint": "在后台日志里打印每次判定结果，方便调参。调好后可以关掉。"
+  }
+}
