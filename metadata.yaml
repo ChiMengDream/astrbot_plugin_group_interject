@@ -1,0 +1,26 @@
+name: astrbot_plugin_group_interject
+display_name: 群聊接话
+short_desc: 群里不用 @ 也能自然接话，你说话必回
+desc: |-
+  让 Bot 在 QQ 群里不用被 @ 也能自然地接话。
+
+  · 你（focus_user_ids 里的号）说话时必定接话
+  · 其他人说话时，先用小模型判断「这句话该不该插嘴」，再决定要不要说
+  · 冷却时间 / 每小时上限 / 免打扰时段，防止刷屏和烧 token
+  · 群白名单、黑名单、昵称关键词（叫你名字时必回）
+  · /接话 查看本群状态与最近一次判定理由
+  · /接话 on | off 开关本群
+  · /接话 测试 对最近一条消息试判定（不会真的说话）
+version: 1.0.0
+author: ChiMeng
+astrbot_version: ">=4.20.0"
+support_platforms:
+  - aiocqhttp
+  - qq_official
+  - telegram
+  - lark
+tags:
+  - 群聊
+  - 主动接话
+  - 拟人
+repo: https://github.com/ChiMengDream/astrbot_plugin_group_interject
